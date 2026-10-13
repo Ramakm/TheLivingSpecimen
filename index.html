@@ -201,12 +201,36 @@ svg{display:block}
 .fade-swap{animation:swap .45s ease both}
 @keyframes swap{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 
+
+/* creator credit */
+.byline{display:inline-flex;align-items:center;gap:5px;margin-top:12px;padding:6px 10px;border-radius:999px;font:500 11px/1 var(--f-mono);color:var(--muted);text-decoration:none;border:1px solid color-mix(in srgb,var(--eosin) 50%,transparent);background:color-mix(in srgb,var(--eosin) 12%,transparent);transition:background .15s}
+.byline b{color:var(--eosin);font-weight:500}
+.byline:hover{background:color-mix(in srgb,var(--eosin) 22%,transparent)}
+.maker{position:relative;display:flex;flex-direction:column;gap:11px;padding:14px;border-radius:6px;border:1.5px solid transparent;
+  background:linear-gradient(var(--bg-2),var(--bg-2)) padding-box,linear-gradient(135deg,var(--eosin),var(--hema) 55%,var(--volt)) border-box;
+  box-shadow:0 14px 34px -14px color-mix(in srgb,var(--eosin) 70%,transparent)}
+.maker .eb{display:flex;align-items:center;gap:7px;font:500 9.5px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--eosin)}
+.spark{width:6px;height:6px;border-radius:50%;background:var(--eosin);box-shadow:0 0 10px var(--eosin);animation:spark 2.4s ease-in-out infinite}
+@keyframes spark{50%{opacity:.35}}
+.who{display:flex;align-items:center;gap:11px;min-width:0}
+.av{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font:500 16px/1 var(--f-display);letter-spacing:.02em;color:#fff;background:linear-gradient(135deg,var(--eosin),var(--hema));box-shadow:0 0 0 3px color-mix(in srgb,var(--eosin) 20%,transparent)}
+.who b{display:block;font:500 17px/1.12 var(--f-display);color:var(--ink);text-wrap:balance}
+.who small{display:block;margin-top:4px;font:400 10px/1.35 var(--f-mono);color:var(--muted)}
+.socials{display:flex;flex-wrap:wrap;gap:5px}
+.soc{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--line-2);color:var(--ink);transition:background .15s,color .15s,border-color .15s,transform .15s}
+.soc:hover,.soc:focus-visible{background:var(--eosin);color:var(--on-accent);border-color:transparent;transform:translateY(-1px)}
+.side-maker{margin-top:auto}
+.dossier-maker{display:none}
+.cards{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent);padding-right:40px!important}
+.nav button{padding:6px 10px}
 @media (max-width:1180px){:root{--side-w:200px;--panel-w:320px}.dossier h1{font-size:38px}.card{width:108px}.card img{width:84px;height:54px}}
 @media (max-width:900px){
   body{overflow:auto}
   .app{height:auto;overflow:visible;display:flex;flex-direction:column}
   .side{position:static;order:0;width:auto;flex-direction:row;align-items:center;justify-content:space-between;padding:16px;background:var(--bg);overflow:visible}
-  .side .nav,.side .feat{display:none}
+  .side .nav,.side .side-maker{display:none}
+  .brand .byline{margin-top:8px}
+  .dossier-maker{display:flex}
   .viewport{position:relative;order:1;height:min(78vh,640px);min-height:520px}
   .hud{left:0;right:0}
   .cards{left:12px;right:12px;top:12px;max-width:none;overflow-x:auto}
@@ -270,14 +294,13 @@ svg{display:block}
     <div class="brand">
       <h2>The Living <i>Specimen</i></h2>
       <p>Physiology · Vol. II</p>
+      <a class="byline" href="https://techwithram.com" target="_blank" rel="noopener">by <b>Ramakrushna Mohapatra</b></a>
     </div>
     <ul class="nav" id="nav"></ul>
-    <div class="feat">
-      <span class="eb">Featured specimen</span>
-      <img id="featImg" alt="Human heart specimen">
-      <h3>A pump that never rests.</h3>
-      <p>About 100,000 beats a day, each one started by a cluster of cells smaller than a grain of rice.</p>
-      <button id="featBtn">Open specimen →</button>
+    <div class="maker side-maker">
+      <span class="eb"><span class="spark"></span>Designed &amp; built by</span>
+      <div class="who"><span class="av" aria-hidden="true">RM</span><div><b>Ramakrushna Mohapatra</b><small>@techwith.ram · techwithram.com</small></div></div>
+      <div class="socials"><a class="soc" href="https://techwithram.com" target="_blank" rel="noopener" aria-label="Website · techwithram.com" title="Website · techwithram.com"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.2"/><path d="M1.8 8h12.4M8 1.8c2 2.2 2 10.2 0 12.4M8 1.8c-2 2.2-2 10.2 0 12.4"/></svg></a><a class="soc" href="https://instagram.com/techwith.ram" target="_blank" rel="noopener" aria-label="Instagram · @techwith.ram" title="Instagram · @techwith.ram"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="12" height="12" rx="3.5"/><circle cx="8" cy="8" r="2.8"/><circle cx="11.6" cy="4.4" r=".6" fill="currentColor"/></svg></a><a class="soc" href="https://www.linkedin.com/in/ramakrushnamohapatra" target="_blank" rel="noopener" aria-label="LinkedIn · Ramakrushna Mohapatra" title="LinkedIn · Ramakrushna Mohapatra"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 7v4.5M5 4.8v.1M7.6 11.5V7m0 2c0-1.2.8-2 1.8-2s1.6.7 1.6 2v2.5"/></svg></a><a class="soc" href="https://x.com/techwith_ram" target="_blank" rel="noopener" aria-label="X · @techwith_ram" title="X · @techwith_ram"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2.5l10 11M13 2.5 3 13.5"/></svg></a><a class="soc" href="https://github.com/Ramakm" target="_blank" rel="noopener" aria-label="GitHub · Ramakm" title="GitHub · Ramakm"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 13.5c-3 .9-3-1.5-4.2-1.8M10 15v-2.2c0-.7 0-1.3-.4-1.8 1.9-.2 3.9-.9 3.9-4.2a3.3 3.3 0 0 0-.9-2.3 3 3 0 0 0-.1-2.3s-.7-.2-2.4.9a8.2 8.2 0 0 0-4.2 0C4.2 1.9 3.5 2.1 3.5 2.1a3 3 0 0 0-.1 2.3 3.3 3.3 0 0 0-.9 2.3c0 3.3 2 4 3.9 4.2-.4.5-.4 1-.4 1.8V15"/></svg></a></div>
     </div>
   </aside>
 
@@ -316,6 +339,11 @@ svg{display:block}
         </div>
       </section>
       <p class="foot">Drag to rotate · scroll to zoom · click a structure · <span class="kbd">Space</span> pause · <span class="kbd">← →</span> step when paused</p>
+      <div class="maker dossier-maker">
+      <span class="eb"><span class="spark"></span>Designed &amp; built by</span>
+      <div class="who"><span class="av" aria-hidden="true">RM</span><div><b>Ramakrushna Mohapatra</b><small>@techwith.ram · techwithram.com</small></div></div>
+      <div class="socials"><a class="soc" href="https://techwithram.com" target="_blank" rel="noopener" aria-label="Website · techwithram.com" title="Website · techwithram.com"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.2"/><path d="M1.8 8h12.4M8 1.8c2 2.2 2 10.2 0 12.4M8 1.8c-2 2.2-2 10.2 0 12.4"/></svg></a><a class="soc" href="https://instagram.com/techwith.ram" target="_blank" rel="noopener" aria-label="Instagram · @techwith.ram" title="Instagram · @techwith.ram"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="12" height="12" rx="3.5"/><circle cx="8" cy="8" r="2.8"/><circle cx="11.6" cy="4.4" r=".6" fill="currentColor"/></svg></a><a class="soc" href="https://www.linkedin.com/in/ramakrushnamohapatra" target="_blank" rel="noopener" aria-label="LinkedIn · Ramakrushna Mohapatra" title="LinkedIn · Ramakrushna Mohapatra"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 7v4.5M5 4.8v.1M7.6 11.5V7m0 2c0-1.2.8-2 1.8-2s1.6.7 1.6 2v2.5"/></svg></a><a class="soc" href="https://x.com/techwith_ram" target="_blank" rel="noopener" aria-label="X · @techwith_ram" title="X · @techwith_ram"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2.5l10 11M13 2.5 3 13.5"/></svg></a><a class="soc" href="https://github.com/Ramakm" target="_blank" rel="noopener" aria-label="GitHub · Ramakm" title="GitHub · Ramakm"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 13.5c-3 .9-3-1.5-4.2-1.8M10 15v-2.2c0-.7 0-1.3-.4-1.8 1.9-.2 3.9-.9 3.9-4.2a3.3 3.3 0 0 0-.9-2.3 3 3 0 0 0-.1-2.3s-.7-.2-2.4.9a8.2 8.2 0 0 0-4.2 0C4.2 1.9 3.5 2.1 3.5 2.1a3 3 0 0 0-.1 2.3 3.3 3.3 0 0 0-.9 2.3c0 3.3 2 4 3.9 4.2-.4.5-.4 1-.4 1.8V15"/></svg></a></div>
+    </div>
     </div>
   </section>
 </div>
@@ -1101,6 +1129,390 @@ function buildEmbryo() {
   return S;
 }
 
+/* ================= specimen: human eye ================= */
+function buildEye() {
+  const S = { id: 'eye', period: 6 };
+  const root = new THREE.Group(); root.rotation.y = -0.28; S.root = root;
+  const pick = []; const R = rng(52); const RAD = 1.5;
+  const capG = (r, theta, dir) => { const g = new THREE.SphereGeometry(r, 72, 28, 0, TAU, 0, theta); g.rotateZ(dir * -Math.PI / 2); return g; };
+
+  const sclMat = tissue('#f1ebe3', { transparent: true, opacity: 0.3, depthWrite: false, roughness: 0.35, clearcoat: 0.6 });
+  const sclera = new THREE.Mesh(organicSphere(RAD, 96, 72, { amp: 0.006, freq: 2 }), sclMat); sclera.userData.part = 'sclera'; sclera.renderOrder = 4; root.add(sclera); pick.push(sclera);
+  const cornea = new THREE.Mesh(capG(0.8, 0.75, 1), tissue('#d6ecff', { transparent: true, opacity: 0.22, depthWrite: false, roughness: 0.05, clearcoat: 1, side: THREE.DoubleSide }));
+  cornea.position.x = 0.812; cornea.userData.part = 'cornea'; cornea.renderOrder = 5; root.add(cornea); pick.push(cornea);
+  const retMat = tissue('#d4603f', { side: THREE.DoubleSide, emissive: new THREE.Color('#ff6a3d'), emissiveIntensity: 0.05 });
+  const retina = new THREE.Mesh(capG(1.44, 1.95, -1), retMat); retina.userData.part = 'retina'; root.add(retina); pick.push(retina);
+
+  /* retinal vessels fanning out from the optic disc */
+  const discDir = V(-1, 0.06, -0.3).normalize();
+  const u0 = V(0, 1, 0).cross(discDir).normalize(), v0 = discDir.clone().cross(u0).normalize();
+  const vesMat = tissue('#a3202a');
+  for (let k = 0; k < 8; k++) {
+    const ang = (k / 8) * TAU + R() * 0.4; const pts = [];
+    for (let j = 0; j <= 10; j++) {
+      const off = u0.clone().multiplyScalar(Math.cos(ang)).add(v0.clone().multiplyScalar(Math.sin(ang))).multiplyScalar(j * 0.11);
+      off.addScaledVector(u0.clone().multiplyScalar(-Math.sin(ang)).add(v0.clone().multiplyScalar(Math.cos(ang))), 0.04 * Math.sin(j * 0.9 + k));
+      const p = discDir.clone().add(off).normalize().multiplyScalar(1.415); if (p.x > 0.55) break; pts.push(p);
+    }
+    if (pts.length > 3) { const m = taperTube(pts, 0.022, 0.008, vesMat, 40, 6); m.userData.part = 'retina'; root.add(m); pick.push(m); }
+  }
+  const F = V(-1.42, 0.0, 0.05);
+  const fov = glow('#ffd98a', 0.5); fov.position.copy(F); root.add(fov);
+
+  const lensMat = tissue('#fff1d2', { transparent: true, opacity: 0.45, depthWrite: false, roughness: 0.1, clearcoat: 1 });
+  const lens = new THREE.Mesh(new THREE.SphereGeometry(0.5, 48, 36), lensMat); lens.scale.set(0.3, 1, 1); lens.position.x = 1.12; lens.userData.part = 'lens'; root.add(lens); pick.push(lens);
+  const cil = new THREE.Mesh(new THREE.TorusGeometry(0.6, 0.07, 12, 64), tissue('#7a3f3a')); cil.rotation.y = Math.PI / 2; cil.position.x = 1.14; cil.userData.part = 'lens'; root.add(cil); pick.push(cil);
+
+  /* iris: ring whose inner edge (the pupil) is moved every frame */
+  const IOUT = 0.56; const iG = new THREE.RingGeometry(0.2, IOUT, 128, 8);
+  const ip = iG.attributes.position; const meta = []; const cols = new Float32Array(ip.count * 3); const c = new THREE.Color();
+  const cA = new THREE.Color('#3d2a1c'), cB = new THREE.Color('#6b8f6e'), cC = new THREE.Color('#2f4a55');
+  for (let i = 0; i < ip.count; i++) {
+    const x = ip.getX(i), y = ip.getY(i); const r = Math.hypot(x, y), a = Math.atan2(y, x); const t = (r - 0.2) / (IOUT - 0.2); meta.push(a, t);
+    c.copy(cA).lerp(cB, smooth(0.08, 0.4, t)).lerp(cC, smooth(0.82, 1, t)).multiplyScalar(0.72 + 0.4 * (vnoise(Math.cos(a) * 9, Math.sin(a) * 9, t * 4) * 0.5 + 0.5));
+    cols[i * 3] = c.r; cols[i * 3 + 1] = c.g; cols[i * 3 + 2] = c.b;
+  }
+  iG.setAttribute('color', new THREE.BufferAttribute(cols, 3));
+  const iris = new THREE.Mesh(iG, new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.6, side: THREE.DoubleSide }));
+  iris.rotation.y = Math.PI / 2; iris.position.x = 1.31; iris.userData.part = 'iris'; root.add(iris); pick.push(iris);
+
+  /* optic nerve + extraocular muscles */
+  const nerveCurve = new THREE.CatmullRomCurve3([discDir.clone().multiplyScalar(1.45), discDir.clone().multiplyScalar(1.9), V(-2.55, 0.12, -1.0), V(-3.35, 0.2, -1.3)]);
+  const nerve = taperTube(nerveCurve, 0.2, 0.22, tissue('#eedac6'), 48, 18); nerve.userData.part = 'nerve'; root.add(nerve); pick.push(nerve);
+  const musMat = tissue('#b5525a');
+  [[[0.5, 1.47, 0], [-0.4, 1.58, 0], [-1.3, 1.2, -0.2], [-2.8, 0.45, -0.9]], [[0.5, -1.47, 0], [-0.4, -1.58, 0], [-1.3, -1.2, -0.2], [-2.8, -0.2, -0.9]],
+   [[0.5, 0, 1.47], [-0.4, 0, 1.58], [-1.3, 0.05, 1.2], [-2.8, 0.15, -0.55]], [[0.5, 0, -1.47], [-0.4, 0, -1.58], [-1.3, 0.05, -1.45], [-2.8, 0.15, -1.25]]]
+    .forEach((p) => { const m = taperTube(p, 0.13, 0.08, musMat, 40, 12); m.userData.part = 'muscle'; root.add(m); pick.push(m); });
+
+  /* light rays and nerve signals */
+  const NL = 460; const rays = makePoints(NL, { size: 0.055, color: '#fff1c4' }); root.add(rays);
+  const rd = []; for (let i = 0; i < NL; i++) { const r0 = Math.sqrt(R()) * 0.62, a0 = R() * TAU; rd.push({ y: r0 * Math.cos(a0), z: r0 * Math.sin(a0), r0, off: R() }); }
+  const NN = 70; const sig = makePoints(NN, { size: 0.08, color: '#ffcf6b' }); root.add(sig);
+  const nLUT = curveLUT(nerveCurve, 120); const noff = []; for (let i = 0; i < NN; i++) noff.push({ o: R(), j: V(R() - 0.5, R() - 0.5, R() - 0.5).multiplyScalar(0.18) });
+
+  const Dmm = (f) => 7 - 4.5 * smooth(0.12, 0.34, f) * (1 - smooth(0.5, 0.85, f));
+  const Lgt = (f) => 0.2 + 0.8 * smooth(0, 0.08, f) * (1 - smooth(0.42, 0.5, f));
+  const tmp = new THREE.Vector3();
+  S.update = (t, f) => {
+    const D = Dmm(f), L = Lgt(f), pr = D / 2 / 10.9;
+    for (let i = 0; i < ip.count; i++) { const a = meta[i * 2], tt = meta[i * 2 + 1]; const r = lerp(pr, IOUT, tt); ip.setXY(i, Math.cos(a) * r, Math.sin(a) * r); }
+    ip.needsUpdate = true;
+    lens.scale.x = 0.3 + 0.03 * Math.sin(t * 0.7);
+    retMat.emissiveIntensity = 0.04 + 0.22 * L * (D / 7) ** 2;
+    fov.material.opacity = 0.15 + 0.85 * L * Math.min(1, (D / 4.5) ** 2); fov.scale.setScalar(0.35 + 0.35 * L);
+    const pa = rays.geometry.attributes.position, al = rays.geometry.attributes.aAlpha;
+    for (let i = 0; i < NL; i++) {
+      const q = rd[i]; const u = (t * 0.3 + q.off) % 1; const s = u * 5.6; const blocked = q.r0 > pr; let a = 0.85 * L;
+      if (s < 2.58) tmp.set(4.2 - s, q.y, q.z);
+      else if (s < 3.03) { const k = (s - 2.58) / 0.45; tmp.set(lerp(1.62, 1.18, k), lerp(q.y, q.y * 0.82, k), lerp(q.z, q.z * 0.82, k)); if (blocked && k > 0.65) a = 0; }
+      else { const k = Math.min(1, (s - 3.03) / 2.57); tmp.set(lerp(1.18, F.x, k), lerp(q.y * 0.82, F.y + q.y * 0.04, k), lerp(q.z * 0.82, F.z + q.z * 0.04, k)); if (blocked) a = 0; }
+      pa.setXYZ(i, tmp.x, tmp.y, tmp.z); al.setX(i, a);
+    }
+    pa.needsUpdate = true; al.needsUpdate = true;
+    const sp = sig.geometry.attributes.position, sa = sig.geometry.attributes.aAlpha;
+    for (let i = 0; i < NN; i++) { const u = (t * 0.55 + noff[i].o) % 1; sampleLUT(nLUT, u, tmp).add(noff[i].j); sp.setXYZ(i, tmp.x, tmp.y, tmp.z); sa.setX(i, L * (D / 7) * 0.95 * Math.sin(Math.PI * u)); }
+    sp.needsUpdate = true; sa.needsUpdate = true;
+  };
+  S.layer = { label: 'Glass sclera', on: true, set(on) { sclMat.opacity = on ? 0.3 : 1; sclMat.depthWrite = !on; sclMat.needsUpdate = true; } };
+  S.pick = pick;
+  S.signal = (f) => Dmm(f); S.sigRange = [1.5, 8]; S.traceWin = 14;
+  S.traceValue = (f) => `${Dmm(f).toFixed(1)} mm`;
+  S.traits = [
+    { icon: 'target', k: 'Pupil diameter', v: (f) => `${Dmm(f).toFixed(1)} mm`, live: true },
+    { icon: 'sun', k: 'Light reaching retina', v: (f) => `${Math.round(100 * Lgt(f) * (Dmm(f) / 7) ** 2)}%`, live: true },
+    { icon: 'ruler', k: 'Focal length', v: () => '≈ 17 mm' },
+    { icon: 'clock', k: 'Phase', v: (f) => S.phaseAt(f).name, live: true },
+  ];
+  S.phases = [{ name: 'Light on', a: 0, b: 0.12 }, { name: 'Constriction', a: 0.12, b: 0.34 }, { name: 'Bright-adapted', a: 0.34, b: 0.5 }, { name: 'Dilation', a: 0.5, b: 0.85 }, { name: 'Dark-adapted', a: 0.85, b: 1 }];
+  S.cycle = { len: 6, unit: 's', dp: 1 }; S.timeScale = 'Real time';
+  S.scale = { per: 10.9, unit: 'mm', cands: [2, 5, 10] };
+  S.cam = { pos: V(1.0, 2.0, 10.6), target: V(0.4, 0, 0) };
+  S.meta = {
+    id: 'LS-052', eyebrow: 'Sensory · Specimen LS-052', name: 'Human Eye', latin: 'Oculus humanus', tags: ['Camera eye', 'Pupillary reflex', 'Photoreception'],
+    desc: 'Light passes the cornea, squeezes through the pupil and is bent by the lens onto the retina, where photoreceptors turn it into electrical signals for the optic nerve. When the light gets brighter, the iris closes the pupil in under a second to protect the retina.',
+    where: 'Seated in the bony orbit, cushioned by fat and steered by six extraocular muscles. The optic nerve leaves from the back toward the brain.',
+    trace: 'Pupil diameter', caption: 'The aperture adjusts before you notice the light change.', layerLabel: 'Glass sclera',
+  };
+  S.parts = [
+    { key: 'iris', name: 'Iris and pupil', color: '#6b8f6e', desc: 'A ring of muscle that sets the size of the pupil, from about 2 mm in bright light to 8 mm in the dark. Its pattern is as unique as a fingerprint.', anchor: [root, V(1.31, 0.46, 0.05)] },
+    { key: 'cornea', name: 'Cornea', color: '#d6ecff', desc: 'The clear front window. It does about two-thirds of the focusing because light bends most as it enters from air.', anchor: [root, V(1.6, 0.3, 0)] },
+    { key: 'lens', name: 'Lens', color: '#fff1d2', desc: 'A flexible crystalline lens hung from the ciliary muscle. It changes shape to fine-tune focus for near or far objects.', anchor: [root, V(1.12, -0.5, 0)] },
+    { key: 'fovea', name: 'Fovea', color: '#ffd98a', desc: 'A tiny pit packed with cone cells, where vision is sharpest. Your eyes move constantly to land images on it.', anchor: [fov, V(0, 0, 0)] },
+    { key: 'retina', name: 'Retina', color: '#d4603f', desc: 'A sheet of about 120 million rods and 6 million cones that converts light into nerve impulses.', anchor: [root, V(-0.95, 0.95, 0.55)] },
+    { key: 'nerve', name: 'Optic nerve', color: '#eedac6', desc: 'About a million nerve fibres carrying signals to the brain. Where it leaves the eye there are no photoreceptors, which creates the blind spot.', anchor: [root, V(-2.6, 0.32, -1.05)] },
+    { key: 'muscle', name: 'Extraocular muscles', color: '#b5525a', desc: 'Six muscles that aim the eye. They are among the fastest and most precisely controlled muscles in the body.', anchor: [root, V(-1.0, 1.55, -0.1)] },
+    { key: 'sclera', name: 'Sclera', color: '#f1ebe3', desc: 'The tough white outer coat that keeps the eyeball’s shape against its internal pressure.', anchor: [root, V(0.3, -0.9, 1.17)] },
+  ];
+  return S;
+}
+
+/* ================= specimen: sarcomere ================= */
+function buildMuscle() {
+  const S = { id: 'muscle', period: 2.4 };
+  const root = new THREE.Group(); root.rotation.set(0.15, -0.2, 0); S.root = root;
+  const pick = []; const R = rng(61);
+  const thick = [[0, 0]]; for (let k = 0; k < 6; k++) thick.push([0.62 * Math.cos(k * Math.PI / 3), 0.62 * Math.sin(k * Math.PI / 3)]);
+  const thin = []; for (let k = 0; k < 6; k++) { const a = Math.PI / 6 + k * Math.PI / 3; thin.push([0.36 * Math.cos(a), 0.36 * Math.sin(a)], [0.98 * Math.cos(a), 0.98 * Math.sin(a)]); }
+
+  const myoMat = tissue('#7b62d8');
+  const tg = new THREE.CylinderGeometry(0.075, 0.075, 3.0, 14); tg.rotateZ(Math.PI / 2);
+  thick.forEach(([y, z]) => { const m = new THREE.Mesh(tg, myoMat); m.position.set(0, y, z); m.userData.part = 'myosin'; root.add(m); pick.push(m); });
+  const heads = []; thick.forEach(([y, z], fi) => { for (const s of [-1, 1]) for (let j = 0; j < 9; j++) heads.push({ y, z, x: s * (0.3 + j * 0.15), s, ang: j * 1.05 + fi * 0.7 + (s > 0 ? 0.5 : 0), ph: R() * TAU }); });
+  const headMesh = new THREE.InstancedMesh(new THREE.CapsuleGeometry(0.038, 0.12, 4, 8), tissue('#a998ff'), heads.length); headMesh.userData.part = 'heads'; root.add(headMesh); pick.push(headMesh);
+
+  const actMat = tissue('#f0679c'); const NB = 26;
+  const beads = new THREE.InstancedMesh(new THREE.SphereGeometry(0.034, 8, 6), actMat, thin.length * 2 * 2 * NB); beads.userData.part = 'actin'; root.add(beads); pick.push(beads);
+  const zMat = tissue('#e7cfc0', { transparent: true, opacity: 0.5, depthWrite: false, side: THREE.DoubleSide });
+  const zg = new THREE.CylinderGeometry(1.25, 1.25, 0.06, 64); zg.rotateZ(Math.PI / 2);
+  const zL = new THREE.Mesh(zg, zMat), zR = new THREE.Mesh(zg, zMat); zL.userData.part = zR.userData.part = 'zdisc'; root.add(zL, zR); pick.push(zL, zR);
+  const mg = new THREE.CylinderGeometry(0.85, 0.85, 0.03, 48); mg.rotateZ(Math.PI / 2);
+  root.add(new THREE.Mesh(mg, tissue('#8f80ff', { transparent: true, opacity: 0.22, depthWrite: false })));
+
+  const ttMat = tissue('#8fd3ff', { emissive: new THREE.Color('#8fd3ff'), emissiveIntensity: 0.05 });
+  for (const s of [-1, 1]) { const m = new THREE.Mesh(new THREE.TorusGeometry(1.4, 0.065, 12, 72), ttMat); m.rotation.y = Math.PI / 2; m.position.x = s * 1.5; m.userData.part = 'ttubule'; root.add(m); pick.push(m); }
+  const sr = new THREE.Mesh(new THREE.CylinderGeometry(1.48, 1.48, 1, 64, 1, true).rotateZ(Math.PI / 2), tissue('#9dffb0', { transparent: true, opacity: 0.07, depthWrite: false, side: THREE.DoubleSide }));
+  sr.userData.part = 'sr'; root.add(sr); pick.push(sr);
+
+  /* titin springs: coils between Z-disc and thick-filament tip */
+  const TP = 34; const titinPos = new Float32Array(6 * 2 * (TP - 1) * 2 * 3);
+  const titinGeo = new THREE.BufferGeometry(); titinGeo.setAttribute('position', new THREE.BufferAttribute(titinPos, 3));
+  const titin = new THREE.LineSegments(titinGeo, new THREE.LineBasicMaterial({ color: '#ffcf6b', transparent: true, opacity: 0.75 })); titin.frustumCulled = false; root.add(titin);
+
+  const NCa = 380; const ca = makePoints(NCa, { size: 0.06, color: '#9dffb0' }); root.add(ca);
+  const cd = []; for (let i = 0; i < NCa; i++) cd.push({ a: R() * TAU, x: (R() - 0.5) * 4.2, r: 0.2 + R() * 1.0, ph: R() * TAU });
+
+  const cyc = (f) => smooth(0.16, 0.38, f) * (1 - smooth(0.55, 0.8, f));
+  const caL = (f) => smooth(0.06, 0.16, f) * (1 - smooth(0.48, 0.72, f));
+  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), up = V(0, 1, 0), tmp = new THREE.Vector3(), dir = new THREE.Vector3(), one = V(1, 1, 1);
+  S.update = (t, f) => {
+    const c = cyc(f), cl = caL(f), L = 4.4 - 1.0 * c, hz = L / 2;
+    zL.position.x = -hz; zR.position.x = hz; sr.scale.y = L;
+    ttMat.emissiveIntensity = 0.05 + 1.4 * gauss(f, 0.035, 0.022);
+    heads.forEach((h, i) => {
+      const o = V(0, Math.cos(h.ang), Math.sin(h.ang));
+      const tilt = 0.55 + 0.5 * Math.sin(t * 13 + h.ph) * cl;
+      dir.copy(o).add(V(h.s * tilt, 0, 0)).normalize();
+      tmp.set(h.x, h.y + o.y * 0.075, h.z + o.z * 0.075).addScaledVector(dir, 0.1);
+      q.setFromUnitVectors(up, dir); m4.compose(tmp, q, one); headMesh.setMatrixAt(i, m4);
+    });
+    headMesh.instanceMatrix.needsUpdate = true;
+    let n = 0;
+    for (const [y, z] of thin) for (const s of [-1, 1]) for (let st = 0; st < 2; st++) for (let j = 0; j < NB; j++) {
+      const a = j * 0.5 + st * Math.PI; tmp.set(s * hz - s * (j * 0.077 + 0.04), y + 0.032 * Math.cos(a), z + 0.032 * Math.sin(a));
+      m4.makeTranslation(tmp.x, tmp.y, tmp.z); beads.setMatrixAt(n++, m4);
+    }
+    beads.instanceMatrix.needsUpdate = true;
+    let p = 0;
+    for (let k = 1; k <= 6; k++) { const [y, z] = thick[k]; for (const s of [-1, 1]) { let px, py, pz; for (let i = 0; i < TP; i++) { const u = i / (TP - 1); const x = lerp(s * hz, s * 1.5, u); const a = u * TAU * 6; const yy = y + 0.045 * Math.cos(a), zz = z + 0.045 * Math.sin(a); if (i) { titinPos.set([px, py, pz, x, yy, zz], p); p += 6; } px = x; py = yy; pz = zz; } } }
+    titinGeo.attributes.position.needsUpdate = true;
+    const cp = ca.geometry.attributes.position, cal = ca.geometry.attributes.aAlpha;
+    for (let i = 0; i < NCa; i++) { const d = cd[i]; const r = lerp(1.42, d.r, cl) + 0.03 * Math.sin(t * 3 + d.ph); const a = d.a + 0.2 * Math.sin(t * 0.8 + d.ph); cp.setXYZ(i, clamp(d.x, -hz, hz), r * Math.cos(a), r * Math.sin(a)); cal.setX(i, 0.2 + 0.8 * cl); }
+    cp.needsUpdate = true; cal.needsUpdate = true;
+  };
+  S.layer = { label: 'Titin springs', on: true, set(on) { titin.visible = on; } };
+  S.pick = pick;
+  S.signal = (f) => cyc(f); S.sigRange = [-0.08, 1.12]; S.traceWin = 7;
+  S.traceValue = (f) => `${Math.round(cyc(f) * 100)}% max`;
+  S.traits = [
+    { icon: 'ruler', k: 'Sarcomere length', v: (f) => `${((4.4 - cyc(f)) * 0.568).toFixed(2)} µm`, live: true },
+    { icon: 'drop', k: 'Free calcium', v: (f) => `${(0.1 + 9.9 * caL(f)).toFixed(1)} µM`, live: true },
+    { icon: 'bolt', k: 'ATP per cross-bridge cycle', v: () => '1' },
+    { icon: 'clock', k: 'Phase', v: (f) => S.phaseAt(f).name, live: true },
+  ];
+  S.phases = [{ name: 'Action potential', short: 'AP', a: 0, b: 0.06 }, { name: 'Calcium release', short: 'Ca²⁺', a: 0.06, b: 0.16 }, { name: 'Cross-bridge cycling', a: 0.16, b: 0.55 }, { name: 'Relaxation', a: 0.55, b: 0.8 }, { name: 'Rest', a: 0.8, b: 1 }];
+  S.cycle = { len: 240, unit: 'ms', dp: 0 }; S.timeScale = 'Slowed 10×';
+  S.scale = { per: 0.568, unit: 'µm', cands: [0.5, 1, 2] };
+  S.cam = { pos: V(2.2, 2.4, 8.4), target: V(0, 0, 0) };
+  S.meta = {
+    id: 'LS-061', eyebrow: 'Musculoskeletal · Specimen LS-061', name: 'Sarcomere', latin: 'Sarcomerus musculi skeletalis', tags: ['Sliding filament', 'Cross-bridges', 'Calcium-triggered'],
+    desc: 'The smallest unit of muscle contraction. A nerve impulse releases calcium, which uncovers binding sites on the thin actin filaments. Myosin heads grab on, pivot and let go again and again, pulling the Z-discs together. No filament gets shorter; they slide past each other.',
+    where: 'Repeated end to end thousands of times inside every skeletal muscle fibre, which is why muscle looks striped under a microscope.',
+    trace: 'Twitch force', caption: 'Nothing shrinks. Everything slides.', layerLabel: 'Titin springs',
+  };
+  S.parts = [
+    { key: 'heads', name: 'Myosin heads', color: '#a998ff', desc: 'Molecular motors. Each one binds actin, swings through a power stroke of about 10 nm, then uses one ATP to let go and re-cock.', anchor: [root, V(0.9, 0.78, 0.1)] },
+    { key: 'actin', name: 'Thin filament (actin)', color: '#f0679c', desc: 'Twisted strands of actin anchored to the Z-discs. Calcium shifts a guard protein aside so myosin can bind.', anchor: [zR, V(-0.5, 0.36, 0.25)] },
+    { key: 'myosin', name: 'Thick filament (myosin)', color: '#7b62d8', desc: 'Bundles of about 300 myosin molecules, fixed at the M-line in the middle of the sarcomere.', anchor: [root, V(-0.2, 0.12, 0)] },
+    { key: 'zdisc', name: 'Z-disc', color: '#e7cfc0', desc: 'The boundary of each sarcomere. During contraction the two Z-discs are pulled toward each other.', anchor: [zL, V(0, 1.25, 0)] },
+    { key: 'titin', name: 'Titin', color: '#ffcf6b', desc: 'The largest known protein. It acts as a molecular spring that keeps the filaments centred and gives relaxed muscle its stretch.', anchor: [zR, V(-0.3, 0.62, 0.05)] },
+    { key: 'ttubule', name: 'T-tubule', color: '#8fd3ff', desc: 'An inward fold of the cell membrane that carries the electrical signal deep into the fibre in a fraction of a millisecond.', anchor: [root, V(1.5, -1.4, 0)] },
+    { key: 'sr', name: 'Sarcoplasmic reticulum', color: '#9dffb0', desc: 'A calcium store wrapped around the filaments. It floods them with calcium to start a contraction and pumps it back to end one.', anchor: [root, V(0.4, 1.48, 0)] },
+  ];
+  return S;
+}
+
+/* ================= specimen: intestinal villi ================= */
+function buildVilli() {
+  const S = { id: 'villi', period: 5 };
+  const root = new THREE.Group(); root.position.y = -0.6; S.root = root;
+  const pick = []; const R = rng(74);
+  const wall = (x, f) => 0.15 * Math.sin(TAU * f - 1.3 * x);
+  const squeeze = (x, f) => Math.max(0, Math.sin(TAU * f - 1.3 * x));
+  const W = 6.6, D = 3.8;
+  const slabG = new THREE.BoxGeometry(W, 0.55, D, 80, 1, 1); const slabBase = slabG.attributes.position.array.slice();
+  const slab = new THREE.Mesh(slabG, tissue('#c0646a')); slab.position.y = -0.3; slab.userData.part = 'mucosa'; root.add(slab); pick.push(slab);
+  const mucG = new THREE.PlaneGeometry(W, D, 100, 50); mucG.rotateX(-Math.PI / 2); const mucBase = mucG.attributes.position.array.slice();
+  const muc = new THREE.Mesh(mucG, tissue('#e59a92', { side: THREE.DoubleSide })); muc.position.y = 0.0; muc.userData.part = 'mucosa'; root.add(muc); pick.push(muc);
+
+  const vg = new THREE.CapsuleGeometry(0.16, 0.95, 8, 18); vg.translate(0, 0.635, 0);
+  { const p = vg.attributes.position; for (let i = 0; i < p.count; i++) { const y = p.getY(i); const k = 1 - 0.22 * clamp(y / 1.27, 0, 1); p.setX(i, p.getX(i) * k); p.setZ(i, p.getZ(i) * k); } vg.computeVertexNormals(); }
+  const villMat = tissue('#f0a59d', { transparent: true, opacity: 0.6, depthWrite: false });
+  const bases = []; for (let ix = 0; ix < 11; ix++) for (let iz = 0; iz < 6; iz++) bases.push({ x: -2.75 + ix * 0.55 + (R() - 0.5) * 0.12, z: -1.4 + iz * 0.56 + (R() - 0.5) * 0.12, ph: R() * TAU });
+  const NV = bases.length;
+  const vill = new THREE.InstancedMesh(vg, villMat, NV); vill.userData.part = 'villus'; vill.renderOrder = 4; root.add(vill); pick.push(vill);
+  const capCurve = new THREE.CatmullRomCurve3([V(-0.075, 0.05, 0), V(-0.085, 0.9, 0), V(0, 1.15, 0), V(0.085, 0.9, 0), V(0.075, 0.05, 0)]);
+  const cap = new THREE.InstancedMesh(new THREE.TubeGeometry(capCurve, 40, 0.022, 8, false), tissue('#d6303c', { emissive: new THREE.Color('#ff2a3d'), emissiveIntensity: 0.2 }), NV); cap.userData.part = 'capillary'; root.add(cap); pick.push(cap);
+  const lg = new THREE.CapsuleGeometry(0.035, 0.82, 4, 10); lg.translate(0, 0.5, 0);
+  const lac = new THREE.InstancedMesh(lg, tissue('#fbf6ea'), NV); lac.userData.part = 'lacteal'; root.add(lac); pick.push(lac);
+
+  const NP = 300; const nut = makePoints(NP, { size: 0.075 }); root.add(nut);
+  const kinds = ['#ffcf6b', '#7fffd4', '#fff6e0'];
+  const nd = []; for (let i = 0; i < NP; i++) {
+    const x0 = -3.1 + R() * 4.7, z0 = (R() - 0.5) * 3.2, y0 = 1.9 + R() * 1.0; const xe = x0 + 0.85;
+    let j = 0, bd = 1e9; bases.forEach((b, k) => { const d = (b.x - xe) ** 2 + (b.z - z0) ** 2; if (d < bd) { bd = d; j = k; } });
+    nd.push({ x0, y0, z0, j, off: R(), ph: R() * TAU }); setColor(nut, i, kinds[i % 3]);
+  }
+  const anchors = { tip: new THREE.Object3D(), mid: new THREE.Object3D() }; root.add(anchors.tip, anchors.mid);
+  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), e = new THREE.Euler(), sc = new THREE.Vector3(), pos = new THREE.Vector3(), tmp = new THREE.Vector3(), tip = new THREE.Vector3();
+  const tips = bases.map(() => new THREE.Vector3()), bpos = bases.map(() => new THREE.Vector3()), quats = bases.map(() => new THREE.Quaternion()), sy = new Float32Array(NV);
+  S.update = (t, f) => {
+    const sp = slabG.attributes.position; for (let i = 0; i < sp.count; i++) { const x = slabBase[i * 3], y = slabBase[i * 3 + 1]; sp.setY(i, y + wall(x, f)); } sp.needsUpdate = true;
+    const mp = mucG.attributes.position; for (let i = 0; i < mp.count; i++) { const x = mucBase[i * 3], z = mucBase[i * 3 + 2]; mp.setY(i, wall(x, f) + 0.03 * Math.sin(3 * z + x)); } mp.needsUpdate = true; mucG.computeVertexNormals();
+    for (let i = 0; i < NV; i++) {
+      const b = bases[i]; const lean = 0.3 * Math.cos(TAU * f - 1.3 * b.x) + 0.05 * Math.sin(t * 1.7 + b.ph);
+      e.set(0.07 * Math.sin(t * 1.3 + b.ph), 0, -lean); q.setFromEuler(e); quats[i].copy(q);
+      sy[i] = 1 - 0.14 * squeeze(b.x, f); sc.set(1, sy[i], 1);
+      pos.set(b.x, wall(b.x, f) + 0.02, b.z); bpos[i].copy(pos);
+      m4.compose(pos, q, sc); vill.setMatrixAt(i, m4); cap.setMatrixAt(i, m4); lac.setMatrixAt(i, m4);
+      tips[i].set(0, 1.27 * sy[i], 0).applyQuaternion(q).add(pos);
+    }
+    vill.instanceMatrix.needsUpdate = cap.instanceMatrix.needsUpdate = lac.instanceMatrix.needsUpdate = true;
+    anchors.tip.position.copy(tips[30]).add(V(0, 0.12, 0)); anchors.mid.position.copy(bpos[31]).lerp(tips[31], 0.45);
+    const na = nut.geometry.attributes.position, nal = nut.geometry.attributes.aAlpha;
+    for (let i = 0; i < NP; i++) {
+      const p = nd[i]; const u = (t * 0.16 + p.off) % 1; let a = 0.9;
+      const drift = tmp.set(p.x0 + 0.85 * Math.min(u, 0.6) / 0.6 + 0.12 * Math.sin(TAU * f - 1.3 * p.x0), p.y0 + 0.1 * Math.sin(t + p.ph), p.z0);
+      if (u < 0.6) { pos.copy(drift); a = 0.9 * smooth(0, 0.05, u); }
+      else if (u < 0.82) { const k = smooth(0.6, 0.82, u); pos.copy(drift).lerp(tips[p.j], k); }
+      else { const k = (u - 0.82) / 0.18; pos.copy(tips[p.j]).lerp(bpos[p.j], k); a = 0.9 * (1 - smooth(0.7, 1, k)); }
+      na.setXYZ(i, pos.x, pos.y, pos.z); nal.setX(i, a);
+    }
+    na.needsUpdate = true; nal.needsUpdate = true;
+  };
+  S.layer = { label: 'Glass villi', on: true, set(on) { villMat.opacity = on ? 0.6 : 1; villMat.depthWrite = !on; villMat.needsUpdate = true; } };
+  S.pick = pick;
+  const pr = (f) => 8 + 22 * Math.max(0, Math.sin(TAU * f)) ** 2;
+  S.signal = (f) => pr(f); S.sigRange = [4, 33]; S.traceWin = 15;
+  S.traceValue = (f) => `${Math.round(pr(f))} mmHg`;
+  S.traits = [
+    { icon: 'ruler', k: 'Villus height', v: () => '0.5–1 mm' },
+    { icon: 'layers', k: 'Absorptive surface', v: () => '≈ 30 m²' },
+    { icon: 'gauge', k: 'Wall pressure', v: (f) => `${Math.round(pr(f))} mmHg`, live: true },
+    { icon: 'clock', k: 'Phase', v: (f) => S.phaseAt(f).name, live: true },
+  ];
+  S.phases = [{ name: 'Wave arrives', a: 0, b: 0.15 }, { name: 'Peak squeeze', a: 0.15, b: 0.35 }, { name: 'Wave passes', a: 0.35, b: 0.5 }, { name: 'Relaxed mixing', a: 0.5, b: 1 }];
+  S.cycle = { len: 5, unit: 's', dp: 1 }; S.timeScale = 'Real time';
+  S.scale = { per: 0.65, unit: 'mm', cands: [0.2, 0.5, 1] };
+  S.cam = { pos: V(2.8, 4.6, 8.4), target: V(0, 0.2, 0) };
+  S.meta = {
+    id: 'LS-074', eyebrow: 'Digestive · Specimen LS-074', name: 'Intestinal Villi', latin: 'Villi intestini tenuis', tags: ['Absorption', 'Peristalsis', 'Microvilli'],
+    desc: 'The lining of the small intestine is folded into millions of finger-like villi. A wave of muscle contraction sweeps the wall and stirs digested food past them. Sugars and amino acids cross into a loop of capillaries inside each villus, and fats are taken up by a central lymph vessel called the lacteal.',
+    where: 'Lining the duodenum, jejunum and ileum, about 6 metres of small intestine between the stomach and the colon.',
+    trace: 'Wall pressure', caption: 'Thirty square metres, folded into a tube.', layerLabel: 'Glass villi',
+  };
+  S.parts = [
+    { key: 'villus', name: 'Villus', color: '#f0a59d', desc: 'A finger of lining about 1 mm tall, covered in cells whose own microvilli form a brush border. Together they multiply the surface area many times over.', anchor: [anchors.tip, V(0, 0, 0)] },
+    { key: 'capillary', name: 'Capillary loop', color: '#d6303c', desc: 'Picks up sugars and amino acids and sends them to the liver through the hepatic portal vein.', anchor: [anchors.mid, V(0, 0, 0)] },
+    { key: 'lacteal', name: 'Lacteal', color: '#fbf6ea', desc: 'A blind-ended lymph vessel that absorbs fats packed into droplets called chylomicrons, which bypass the liver at first.', anchor: [root, V(-1.1, 0.5, 1.4)] },
+    { key: 'mucosa', name: 'Mucosa and muscle wall', color: '#c0646a', desc: 'Smooth muscle under the lining contracts in waves (peristalsis) that push and mix food along the gut.', anchor: [root, V(2.9, -0.2, 1.9)] },
+  ];
+  return S;
+}
+
+/* ================= specimen: DNA replication fork ================= */
+function buildDNA() {
+  const S = { id: 'dna', period: 2.5 };
+  const root = new THREE.Group(); root.rotation.set(0.1, -0.15, 0); S.root = root;
+  const pick = []; const R = rng(88);
+  const N = 92, sp = 0.085, xmin = -3.9, span = N * sp, xF = 0.7, v = 0.34, r = 0.42, kk = TAU / (10.5 * sp), phi = Math.PI * 0.78, P = S.period;
+  const comp = { A: 'T', T: 'A', G: 'C', C: 'G' }; const BC = { A: '#ff6b6b', T: '#ffd166', G: '#5fd38d', C: '#5aa9ff' };
+  const seqA = []; for (let i = 0; i < N; i++) seqA.push('ATGC'[Math.floor(R() * 4)]);
+  const bead = new THREE.SphereGeometry(0.068, 12, 8); const rung = new THREE.CylinderGeometry(0.03, 0.03, 1, 8);
+  const mk = (geo, col, key) => { const m = new THREE.InstancedMesh(geo, tissue(col), N); m.userData.part = key; root.add(m); pick.push(m); return m; };
+  const oA = mk(bead, '#e4ddff', 'parent'), oB = mk(bead, '#e4ddff', 'parent'), nA = mk(bead, '#f0679c', 'leading'), nB = mk(bead, '#ffb347', 'lagging');
+  const hA = mk(rung, '#ffffff', 'bases'), hB = mk(rung, '#ffffff', 'bases'), hNA = mk(rung, '#ffffff', 'bases'), hNB = mk(rung, '#ffffff', 'bases');
+  const cc = new THREE.Color();
+  for (let i = 0; i < N; i++) { const a = seqA[i], b = comp[a]; hA.setColorAt(i, cc.set(BC[a])); hB.setColorAt(i, cc.set(BC[b])); hNA.setColorAt(i, cc.set(BC[b])); hNB.setColorAt(i, cc.set(BC[a])); }
+  const heli = new THREE.Mesh(new THREE.TorusGeometry(0.58, 0.13, 18, 56), tissue('#8f80ff')); heli.rotation.y = Math.PI / 2; heli.position.x = xF + 0.12; heli.userData.part = 'helicase'; root.add(heli); pick.push(heli);
+  const polMat = tissue('#58c7b8');
+  const polL = new THREE.Mesh(organicSphere(0.34, 48, 36, { amp: 0.16, freq: 2.6, seed: 2 }), polMat); polL.userData.part = 'pol'; root.add(polL); pick.push(polL);
+  const polG = new THREE.Mesh(organicSphere(0.32, 48, 36, { amp: 0.16, freq: 2.6, seed: 7 }), polMat); polG.userData.part = 'pol'; root.add(polG); pick.push(polG);
+  const primase = glow('#7fffd4', 0.45); root.add(primase); const ligase = glow('#ffcf6b', 0.5); root.add(ligase);
+  const NF = 280; const free = makePoints(NF, { size: 0.07, alpha: 0.75 }); root.add(free);
+  const fd = []; for (let i = 0; i < NF; i++) { fd.push({ p: V((R() - 0.5) * 7.4, (R() - 0.5) * 3.8, (R() - 0.5) * 2.4), ph: R() * TAU }); setColor(free, i, BC['ATGC'[i % 4]]); }
+  const yA = (x) => 0.95 * smooth(0, 0.9, xF - x), yB = (x) => -yA(x);
+  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), up = V(0, 1, 0), p1 = new THREE.Vector3(), p2 = new THREE.Vector3(), ax = new THREE.Vector3(), d = new THREE.Vector3(), s3 = new THREE.Vector3();
+  const setBead = (mesh, i, p, s) => { m4.compose(p, q.identity(), s3.set(s, s, s)); mesh.setMatrixAt(i, m4); };
+  const setRung = (mesh, i, a, b, s) => { d.copy(b).sub(a); const len = d.length(); q.setFromUnitVectors(up, d.normalize()); m4.compose(p1.copy(a).add(b).multiplyScalar(0.5), q, s3.set(s, Math.max(0.001, len * s), s)); mesh.setMatrixAt(i, m4); };
+  const pA = new THREE.Vector3(), pB = new THREE.Vector3(), pNA = new THREE.Vector3(), pNB = new THREE.Vector3(), cA = new THREE.Vector3(), cB = new THREE.Vector3();
+  const lagX = (t) => { const kc = Math.floor(t / P), ph = (t - kc * P) / P; if (ph < 0.85) { const fr = 1 - ph / 0.85; const te = (kc - 1) * P + fr * P; return xF - v * (t - te); } return lerp(xF - v * (t - (kc - 1) * P), xF - 0.4, smooth(0.85, 1, ph)); };
+  S.update = (t, f) => {
+    for (let i = 0; i < N; i++) {
+      const x = xmin + (((i * sp - v * t) % span) + span) % span; const th = i * sp * kk;
+      const e = smooth(xmin, xmin + 0.5, x) * (1 - smooth(xmin + span - 0.5, xmin + span, x));
+      const ya = yA(x), yb = yB(x);
+      cA.set(x, ya, 0); cB.set(x, yb, 0);
+      pA.set(x, ya + r * Math.cos(th), r * Math.sin(th)); pB.set(x, yb + r * Math.cos(th + phi), r * Math.sin(th + phi));
+      pNA.set(x, ya + r * Math.cos(th + phi), r * Math.sin(th + phi)); pNB.set(x, yb + r * Math.cos(th), r * Math.sin(th));
+      const age = (xF - x) / v;
+      const lead = age > 0 ? smooth(0.25, 0.55, age) : 0;
+      let lag = 0; if (age > 0) { const te = t - age; const kf = Math.floor(te / P); const fr = te / P - kf; const tf = (kf + 1) * P + (1 - fr) * P * 0.85; lag = smooth(tf, tf + 0.15, t); }
+      setBead(oA, i, pA, e); setBead(oB, i, pB, e); setBead(nA, i, pNA, e * lead); setBead(nB, i, pNB, e * lag);
+      setRung(hA, i, pA, cA, e); setRung(hB, i, pB, cB, e);
+      setRung(hNA, i, pNA, cA, e * lead); setRung(hNB, i, pNB, cB, e * lag);
+    }
+    for (const m of [oA, oB, nA, nB, hA, hB, hNA, hNB]) m.instanceMatrix.needsUpdate = true;
+    heli.rotation.x = t * 3.2; heli.scale.setScalar(1 + 0.03 * Math.sin(t * 9));
+    polL.position.set(xF - 0.62, yA(xF - 0.62) + 0.05, 0.42); polL.rotation.set(t * 0.8, t * 1.1, 0);
+    const lx = lagX(t); polG.position.set(lx, yB(lx) - 0.05, 0.42); polG.rotation.set(t * 0.9, -t, 0);
+    primase.position.set(xF - 0.3, yB(xF - 0.3), 0.3); primase.material.opacity = Math.sin(Math.PI * clamp(f / 0.1, 0, 1));
+    const kc = Math.floor(t / P); const lgx = xF - v * (t - (kc - 1) * P); ligase.position.set(lgx, yB(lgx), 0.25); ligase.material.opacity = f > 0.85 ? Math.sin(Math.PI * (f - 0.85) / 0.15) : 0;
+    const fp = free.geometry.attributes.position;
+    for (let i = 0; i < NF; i++) { const o = fd[i]; fp.setXYZ(i, o.p.x + 0.12 * Math.sin(t * 0.9 + o.ph), o.p.y + 0.12 * Math.sin(t * 1.1 + o.ph * 2), o.p.z + 0.12 * Math.cos(t * 0.8 + o.ph)); }
+    fp.needsUpdate = true;
+  };
+  S.layer = { label: 'Free nucleotides', on: true, set(on) { free.visible = on; } };
+  S.pick = pick;
+  const prog = (f) => clamp((f - 0.04) / 0.81, 0, 1);
+  S.signal = (f) => prog(f); S.sigRange = [-0.08, 1.1]; S.traceWin = 8;
+  S.traceValue = (f) => `${Math.round(prog(f) * 100)}% built`;
+  S.traits = [
+    { icon: 'ruler', k: 'Helix pitch', v: () => '3.4 nm · 10.5 bp' },
+    { icon: 'pulse', k: 'Fork speed (human)', v: () => '≈ 50 nt/s' },
+    { icon: 'layers', k: 'Current Okazaki fragment', v: (f) => `${Math.round(prog(f) * 100)}%`, live: true },
+    { icon: 'clock', k: 'Phase', v: (f) => S.phaseAt(f).name, live: true },
+  ];
+  S.phases = [{ name: 'Priming', a: 0, b: 0.08 }, { name: 'Okazaki extension', a: 0.08, b: 0.85 }, { name: 'Ligation', a: 0.85, b: 1 }];
+  S.cycle = { len: 2.5, unit: 's', dp: 2 }; S.timeScale = 'Schematic speed';
+  S.scale = { per: 4, unit: 'nm', cands: [1, 2, 5] };
+  S.cam = { pos: V(0.4, 1.6, 9.6), target: V(-0.3, 0, 0) };
+  S.meta = {
+    id: 'LS-088', eyebrow: 'Genetics · Specimen LS-088', name: 'DNA Replication', latin: 'Replicatio acidi deoxyribonucleici', tags: ['Semi-conservative', 'Helicase', 'Okazaki fragments'],
+    desc: 'Helicase unzips the double helix, and DNA polymerase builds a new partner for each old strand. One new strand grows smoothly toward the fork. The other runs the opposite way, so it is built backwards in short Okazaki fragments that are stitched together afterwards.',
+    where: 'Inside the nucleus during S phase. Each human chromosome is copied from thousands of forks at once, so the whole genome is duplicated in about 8 hours.',
+    trace: 'Okazaki fragment progress', caption: 'Every copy keeps half of the original.', layerLabel: 'Free nucleotides',
+  };
+  S.parts = [
+    { key: 'helicase', name: 'Helicase', color: '#8f80ff', desc: 'A ring-shaped motor that walks along DNA and pries the two strands apart, breaking the hydrogen bonds between base pairs.', anchor: [root, V(xF + 0.12, 0.75, 0)] },
+    { key: 'leading', name: 'Leading strand', color: '#f0679c', desc: 'Built continuously in the same direction the fork moves, one nucleotide right after another.', anchor: [root, V(-1.6, 1.45, 0)] },
+    { key: 'lagging', name: 'Lagging strand', color: '#ffb347', desc: 'Built backwards in Okazaki fragments of 100–200 nucleotides. Primase starts each one, and ligase seals the gaps.', anchor: [root, V(-2.0, -1.45, 0)] },
+    { key: 'pol', name: 'DNA polymerase', color: '#58c7b8', desc: 'Adds matching nucleotides to the new strand and proofreads as it goes, making about one error per billion bases.', anchor: [polL, V(0, 0.36, 0)] },
+    { key: 'bases', name: 'Base pairs', color: '#5fd38d', desc: 'A pairs with T and G pairs with C. Because each old strand dictates its partner, both copies end up identical.', anchor: [root, V(2.4, 0, 0.2)] },
+    { key: 'parent', name: 'Parent double helix', color: '#e4ddff', desc: 'The original molecule. Each daughter helix keeps one of its strands, which is why replication is called semi-conservative.', anchor: [root, V(3.0, 0.55, 0)] },
+  ];
+  return S;
+}
+
 /* ================= scene ================= */
 const canvas = $('#gl'), viewport = $('#viewport');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
@@ -1118,7 +1530,7 @@ scene.add(new THREE.HemisphereLight('#d9dcff', '#2a1830', 0.35));
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true; controls.dampingFactor = 0.08; controls.enablePan = false; controls.minDistance = 3.5; controls.maxDistance = 16; controls.autoRotateSpeed = 0.7;
 
-const specimens = [buildHeart(), buildLungs(), buildCell(), buildNeuron(), buildEmbryo()];
+const specimens = [buildHeart(), buildLungs(), buildEye(), buildNeuron(), buildMuscle(), buildVilli(), buildCell(), buildDNA(), buildEmbryo()];
 for (const s of specimens) {
   scene.add(s.root); s.root.visible = false;
   s.phaseAt = (f) => s.phases.find((p) => f >= p.a && f < p.b) || s.phases[s.phases.length - 1];
@@ -1156,7 +1568,7 @@ function thumbs() {
   for (const s of specimens) {
     specimens.forEach((o) => (o.root.visible = o === s));
     camera.position.copy(s.cam.pos).sub(s.cam.target).multiplyScalar(s.id === 'neuron' ? 0.78 : 0.82).add(s.cam.target); camera.lookAt(s.cam.target);
-    const tf = s.id === 'embryo' ? 0.66 : s.id === 'lungs' ? 0.42 : 0.3;
+    const tf = { embryo: 0.66, lungs: 0.42, eye: 0.2, muscle: 0.35, villi: 0.22, dna: 0.5 }[s.id] ?? 0.3;
     s.update(s.period * tf, tf, { camera, target: s.cam.target });
     renderer.render(scene, camera); out[s.id] = canvas.toDataURL('image/png');
   }
@@ -1169,26 +1581,32 @@ const ICONS = {
   drop: '<path d="M8 1.8s4.5 4.8 4.5 8a4.5 4.5 0 0 1-9 0c0-3.2 4.5-8 4.5-8z"/>', clock: '<circle cx="8" cy="8" r="6"/><path d="M8 4.5V8l2.5 1.5"/>',
   ruler: '<path d="M1.5 10.5 10.5 1.5l4 4-9 9z"/><path d="M4.5 7.5l1.5 1.5M6.5 5.5l1.5 1.5M8.5 3.5l1.5 1.5"/>', bolt: '<path d="M9 1.5 3.5 9H8l-1 5.5L12.5 7H8z"/>',
   layers: '<path d="M8 2 1.5 5.5 8 9l6.5-3.5z"/><path d="M1.5 9 8 12.5 14.5 9"/>',
+  target: '<circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2.2"/>', sun: '<circle cx="8" cy="8" r="3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.4 1.4M11.6 11.6 13 13M3 13l1.4-1.4M11.6 4.4 13 3"/>',
 };
 const svg = (k) => `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">${ICONS[k]}</svg>`;
 
+const NAMEOF = (id) => specimens.find((x) => x.id === id)?.meta.name ?? "";
 const NAV = [
-  { k: 'Home', icon: '<path d="M2 7.5 8 2.5l6 5V14H2z"/><path d="M6.5 14v-4h3v4"/>' },
-  { k: 'Featured', icon: '<path d="m8 1.8 1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.6l-3.8 2 .7-4.3-3.1-3 4.3-.6z"/>', spec: 'heart', cur: true },
-  { k: 'Circulatory', n: '14 specimens', icon: ICONS.drop, spec: 'heart' },
-  { k: 'Cellular', n: '22 specimens', icon: '<circle cx="8" cy="8" r="6"/><circle cx="7" cy="7.5" r="2"/><circle cx="11" cy="10" r=".8"/>', spec: 'cell' },
-  { k: 'Nervous', n: '18 specimens', icon: '<circle cx="4" cy="8" r="2"/><path d="M6 8h8M11 8l2.5-2.5M11 8l2.5 2.5M2.5 6.5 1 5M2.5 9.5 1 11"/>', spec: 'neuron' },
-  { k: 'Respiratory', n: '9 specimens', icon: '<path d="M8 1.5V8M8 8c-1 0-1.5 1-3 1.5S1.5 13 2.5 14s3-.5 3.5-2M8 8c1 0 1.5 1 3 1.5s3.5 3.5 2.5 4.5-3-.5-3.5-2"/>', spec: 'lungs' },
-  { k: 'Embryology', n: '7 specimens', icon: '<path d="M8 13.5A5.5 5.5 0 1 1 13.5 8c0 2-1.5 3.5-3.5 3.5S7 10 7 8.5 8 6 9.5 6.5"/>', spec: 'embryo' },
+  { k: 'Home', icon: '<path d="M2 7.5 8 2.5l6 5V14H2z"/><path d="M6.5 14v-4h3v4"/>', spec: 'heart', home: true },
+  { k: 'Circulatory', icon: ICONS.drop, spec: 'heart', cur: true },
+  { k: 'Respiratory', icon: '<path d="M8 1.5V8M8 8c-1 0-1.5 1-3 1.5S1.5 13 2.5 14s3-.5 3.5-2M8 8c1 0 1.5 1 3 1.5s3.5 3.5 2.5 4.5-3-.5-3.5-2"/>', spec: 'lungs' },
+  { k: 'Sensory', icon: '<path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/>', spec: 'eye' },
+  { k: 'Nervous', icon: '<circle cx="4" cy="8" r="2"/><path d="M6 8h8M11 8l2.5-2.5M11 8l2.5 2.5M2.5 6.5 1 5M2.5 9.5 1 11"/>', spec: 'neuron' },
+  { k: 'Musculoskeletal', icon: '<path d="M2 8h12M4 5v6M12 5v6M6.5 6.5v3M9.5 6.5v3"/>', spec: 'muscle' },
+  { k: 'Digestive', icon: '<path d="M4 2v3c0 2 2 2 4 2s4 0 4 2-2 2-4 2-4 0-4 2v1"/>', spec: 'villi' },
+  { k: 'Cellular', icon: '<circle cx="8" cy="8" r="6"/><circle cx="7" cy="7.5" r="2"/><circle cx="11" cy="10" r=".8"/>', spec: 'cell' },
+  { k: 'Genetics', icon: '<path d="M4 1.5c0 4 8 4 8 6.5s-8 2.5-8 6.5M12 1.5c0 4-8 4-8 6.5s8 2.5 8 6.5M5.2 4h5.6M5.2 12h5.6"/>', spec: 'dna' },
+  { k: 'Embryology', icon: '<path d="M8 13.5A5.5 5.5 0 1 1 13.5 8c0 2-1.5 3.5-3.5 3.5S7 10 7 8.5 8 6 9.5 6.5"/>', spec: 'embryo' },
 ];
 function buildNav() {
   $('#nav').innerHTML = NAV.map((n, i) => `<li><button data-i="${i}" ${n.soon ? 'aria-disabled="true"' : ''} ${n.cur ? 'aria-current="true"' : ''}>
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">${n.icon}</svg>
-    <span class="lbl"><b>${n.k}</b>${n.n ? `<small>${n.n}</small>` : ''}</span>${n.soon ? '<span class="soon">Soon</span>' : ''}</button></li>`).join('');
+    <span class="lbl"><b>${n.k}</b>${n.home ? '' : `<small>${NAMEOF(n.spec)}</small>`}</span>${n.soon ? '<span class="soon">Soon</span>' : ''}</button></li>`).join('');
   $('#nav').addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return; const n = NAV[+b.dataset.i]; if (n.soon) return;
     $('#nav').querySelectorAll('button').forEach((x) => x.removeAttribute('aria-current')); b.setAttribute('aria-current', 'true');
     if (n.spec) select(n.spec);
+    if (n.home) flyTo(st.cur.cam.pos, st.cur.cam.target);
   });
 }
 
@@ -1233,6 +1651,8 @@ function select(id) {
   st.cur = s;
   document.querySelectorAll('.card').forEach((c) => c.setAttribute('aria-selected', String(c.dataset.id === id)));
   renderPanel(s); buildPins(s); selectPart(0); setLayerBtn();
+  const card = document.querySelector(`.card[data-id="${id}"]`); if (card) card.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
+  document.querySelectorAll('#nav button').forEach((b) => { const n = NAV[+b.dataset.i]; if (n && !n.home) b.toggleAttribute('aria-current', n.spec === id); if (n && !n.home && n.spec === id) b.setAttribute('aria-current', 'true'); });
   flyTo(s.cam.pos, s.cam.target);
 }
 let fly = null;
@@ -1280,7 +1700,6 @@ $('#zoomIn').addEventListener('click', () => dolly(0.8));
 $('#zoomOut').addEventListener('click', () => dolly(1.25));
 $('#resetView').addEventListener('click', () => flyTo(st.cur.cam.pos, st.cur.cam.target));
 $('#fullBtn').addEventListener('click', () => { try { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen?.().catch(() => {}); } catch (_) {} });
-$('#featBtn').addEventListener('click', () => select('heart'));
 
 /* theme */
 let tok = {};
@@ -1408,7 +1827,6 @@ function frame(now) {
 /* ================= boot ================= */
 applyTheme();
 THUMBS = thumbs();
-$('#featImg').src = THUMBS.heart;
 buildNav(); buildCards();
 select('heart');
 camera.position.copy(st.cur.cam.pos).multiplyScalar(1.25); controls.target.copy(st.cur.cam.target);
