@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="An interactive anatomy atlas where every 3D specimen is alive: a beating heart, a working cell and a firing neuron.">
+<meta name="description" content="An interactive anatomy atlas where every 3D specimen is alive: a beating heart, breathing lungs, a working cell, a firing neuron and a dividing embryo.">
 <title>The Living Specimen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,14 +64,15 @@ svg{display:block}
 .hud{position:absolute;top:0;bottom:0;left:var(--side-w);right:var(--panel-w);pointer-events:none;z-index:3}
 .hud>*{pointer-events:auto}
 
-.cards{position:absolute;top:20px;left:24px;display:flex;gap:10px;max-width:calc(100% - 220px)}
-.card{width:148px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 10px 10px;background:var(--panel);border:1px solid var(--line);border-radius:3px;text-align:center;position:relative;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:border-color .2s}
+.cards{position:absolute;top:20px;left:24px;display:flex;gap:8px;max-width:calc(100% - 210px);overflow-x:auto;scrollbar-width:none;padding:1px}
+.cards::-webkit-scrollbar{display:none}
+.card{width:118px;flex:none;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 10px 10px;background:var(--panel);border:1px solid var(--line);border-radius:3px;text-align:center;position:relative;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:border-color .2s}
 .card:hover{border-color:var(--line-2)}
 .card[aria-selected="true"]{border-color:var(--eosin);box-shadow:inset 0 0 0 1px var(--eosin)}
 .card .cid{position:absolute;top:6px;left:8px;font:500 9.5px/1 var(--f-mono);letter-spacing:.06em;color:var(--faint)}
-.card img{width:112px;height:72px;object-fit:contain;margin-top:4px}
-.card .cn{font:500 15px/1.15 var(--f-display);color:var(--ink)}
-.card .cl{font:italic 400 12px/1.2 var(--f-display);color:var(--muted)}
+.card img{width:92px;height:60px;object-fit:contain;margin-top:4px}
+.card .cn{font:500 14px/1.15 var(--f-display);color:var(--ink)}
+.card .cl{font:italic 400 11px/1.2 var(--f-display);color:var(--muted)}
 
 .status{position:absolute;top:22px;right:24px;display:flex;align-items:center;gap:8px;padding:7px 11px;border:1px solid var(--line);border-radius:999px;background:var(--panel);font:500 10.5px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .status .dot{width:7px;height:7px;border-radius:50%;background:var(--eosin);box-shadow:0 0 0 0 var(--eosin);animation:beat 1.2s infinite}
@@ -200,7 +201,7 @@ svg{display:block}
 .fade-swap{animation:swap .45s ease both}
 @keyframes swap{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 
-@media (max-width:1180px){:root{--side-w:200px;--panel-w:320px}.dossier h1{font-size:38px}.card{width:128px}.card img{width:96px;height:62px}}
+@media (max-width:1180px){:root{--side-w:200px;--panel-w:320px}.dossier h1{font-size:38px}.card{width:108px}.card img{width:84px;height:54px}}
 @media (max-width:900px){
   body{overflow:auto}
   .app{height:auto;overflow:visible;display:flex;flex-direction:column}
@@ -868,6 +869,238 @@ function buildNeuron() {
   return S;
 }
 
+/* ================= specimen: human lungs ================= */
+function buildLungs() {
+  const S = { id: 'lungs', period: 4 };
+  const root = new THREE.Group(); root.position.y = -0.1; S.root = root;
+  const pick = []; const R = rng(33);
+  const breath = (f) => (f < 0.4 ? smooth(0, 0.4, f) : f < 0.45 ? 1 : f < 0.9 ? 1 - smooth(0.45, 0.9, f) : 0);
+
+  /* trachea + cartilage rings */
+  const airMat = tissue('#e6cbbf', { roughness: 0.55 });
+  const trachea = taperTube([[0, 2.45, 0], [0, 1.8, 0.02], [0, 1.1, 0]], 0.17, 0.15, airMat, 40, 20); trachea.userData.part = 'trachea'; root.add(trachea); pick.push(trachea);
+  const ringMat = tissue('#f3e6d6', { roughness: 0.5 });
+  for (let i = 0; i < 9; i++) { const ring = new THREE.Mesh(new THREE.TorusGeometry(0.175, 0.026, 8, 28, Math.PI * 1.6), ringMat); ring.rotation.set(Math.PI / 2, 0, Math.PI * 0.7); ring.position.y = 2.35 - i * 0.135; ring.userData.part = 'trachea'; root.add(ring); pick.push(ring); }
+
+  /* chest group breathes; lungs + airway tree inside */
+  const chest = new THREE.Group(); chest.position.set(0, 0.1, 0); root.add(chest);
+  const lungMats = [];
+  const lungShape = (side) => (v, n) => {
+    const medial = side > 0 ? n.x < 0 : n.x > 0;
+    if (medial) v.x *= 0.5;
+    if (n.y > 0) { const k = 1 - 0.38 * n.y * n.y; v.x *= k; v.z *= k; }
+    if (n.y < -0.2) v.y *= 0.82;
+    if (side < 0 && n.x > 0 && n.z > 0 && n.y < 0.25) v.x *= 0.55;
+  };
+  const lung = (side, key, col) => {
+    const m = tissue(col, { transparent: true, opacity: 0.4, depthWrite: false, roughness: 0.42, clearcoat: 0.7 }); lungMats.push(m);
+    const mesh = new THREE.Mesh(organicSphere(1, 128, 96, { amp: 0.05, freq: 2.2, seed: side > 0 ? 2 : 8, shape: lungShape(side), detail: 0.018 }), m);
+    mesh.position.set(side * 0.98, -0.25, 0).sub(chest.position); mesh.scale.set(side > 0 ? 0.9 : 0.82, 1.55, 0.82);
+    mesh.userData.part = key; mesh.renderOrder = 3; chest.add(mesh); pick.push(mesh); return mesh;
+  };
+  const lungR = lung(1, 'rlung', '#e8949d');
+  const lungL = lung(-1, 'llung', '#e18a96');
+
+  const tree = new THREE.Group(); tree.position.set(0, 1.1, 0).sub(chest.position); chest.add(tree);
+  const ctrR = V(0.98, -1.35, 0), ctrL = V(-0.98, -1.35, 0); /* lung centres in tree-local space */
+  const fit = (p, side) => { const c = side > 0 ? ctrR : ctrL; const h = side > 0 ? V(0.62, 1.4, 0.66) : V(0.56, 1.38, 0.66); const q = p.clone().sub(c).divide(h); if (q.length() > 0.82) { q.setLength(0.82); p.copy(q.multiply(h).add(c)); } return p; };
+  const brMat = tissue('#ead2c6', { roughness: 0.5 });
+  const leaves = []; const top = V(0, 1.35, 0);
+  const grow = (p0, dir, len, r, depth, side, path) => {
+    let end = p0.clone().addScaledVector(dir, len);
+    if (depth < 3) fit(end, side);
+    const mid = p0.clone().lerp(end, 0.5).add(V(R() - 0.5, R() - 0.5, R() - 0.5).multiplyScalar(len * 0.12));
+    const m = taperTube([p0, mid, end], r, r * 0.78, brMat, 20, 12); m.userData.part = 'bronchi'; tree.add(m); pick.push(m);
+    const j = new THREE.Mesh(new THREE.SphereGeometry(r * 0.78, 12, 8), brMat); j.position.copy(end); tree.add(j);
+    const np = path.concat([mid, end]);
+    if (depth === 0) { leaves.push({ end, path: np }); return; }
+    const nd = end.clone().sub(p0).normalize();
+    for (let k = 0; k < 2; k++) {
+      const ax = V(R() - 0.5, R() - 0.5, R() - 0.5).cross(nd).normalize();
+      const d = nd.clone().applyAxisAngle(ax, (0.38 + R() * 0.32) * (k ? 1 : -1)).add(V(side * 0.12, -0.18, 0)).normalize();
+      grow(end, d, len * 0.74, r * 0.72, depth - 1, side, np);
+    }
+  };
+  const carina = V(0, 0, 0);
+  grow(carina, V(0.62, -0.78, 0.04).normalize(), 0.72, 0.115, 3, 1, [top, carina]);
+  grow(carina, V(-0.7, -0.7, -0.03).normalize(), 0.82, 0.105, 3, -1, [top, carina]);
+
+  /* alveolar clusters at every terminal branch */
+  const alvMat = tissue('#f4a8b5', { emissive: new THREE.Color('#ff5c7a'), emissiveIntensity: 0 });
+  const NA = leaves.length * 8; const alv = new THREE.InstancedMesh(new THREE.SphereGeometry(0.055, 12, 8), alvMat, NA); alv.userData.part = 'alveoli'; tree.add(alv); pick.push(alv);
+  const aoff = []; for (let i = 0; i < NA; i++) aoff.push(V(R() - 0.5, R() - 0.5, R() - 0.5).normalize().multiplyScalar(0.06 + R() * 0.06));
+
+  /* diaphragm */
+  const diaMat = tissue('#b5525a', { side: THREE.DoubleSide, transparent: true, opacity: 0.92 });
+  const dia = new THREE.Mesh(new THREE.SphereGeometry(2.0, 96, 32, 0, TAU, 0, Math.PI * 0.42), diaMat); dia.scale.set(1, 0.42, 0.8); dia.userData.part = 'diaphragm'; root.add(dia); pick.push(dia);
+
+  /* air particles: in = oxygen-rich (cool), out = carbon-dioxide-rich (amber) */
+  const per = 24; const NP = leaves.length * per; const air = makePoints(NP, { size: 0.075 }); tree.add(air);
+  const ap = []; leaves.forEach((L) => { const lut = curveLUT(new THREE.CatmullRomCurve3(L.path), 120); for (let k = 0; k < per; k++) ap.push({ lut, s: 0.2 + 0.8 * Math.pow(R(), 0.6), j: V(R() - 0.5, R() - 0.5, R() - 0.5).multiplyScalar(0.06) }); });
+  const cIn = new THREE.Color('#8fe3ff'), cOut = new THREE.Color('#ffc35c'), cc = new THREE.Color();
+  const m4 = new THREE.Matrix4(), tmp = new THREE.Vector3(), one = V(1, 1, 1), q0 = new THREE.Quaternion();
+  S.update = (t, f) => {
+    const b = breath(f);
+    chest.scale.set(1 + 0.07 * b, 1 + 0.05 * b, 1 + 0.08 * b);
+    dia.position.y = -1.95 - 0.32 * b; dia.scale.y = 0.42 - 0.1 * b;
+    alvMat.emissiveIntensity = 0.65 * gauss(f, 0.43, 0.07);
+    const s = 0.75 + 0.45 * b;
+    for (let i = 0; i < NA; i++) { const L = leaves[Math.floor(i / 8)]; tmp.copy(aoff[i]).multiplyScalar(0.8 + 0.4 * b).add(L.end); m4.compose(tmp, q0, one.clone().multiplyScalar(s)); alv.setMatrixAt(i, m4); }
+    alv.instanceMatrix.needsUpdate = true;
+    const mix = smooth(0.38, 0.52, f) * (1 - smooth(0.92, 1, f));
+    cc.copy(cIn).lerp(cOut, mix);
+    const pa = air.geometry.attributes.position, al = air.geometry.attributes.aAlpha, co = air.geometry.attributes.aColor;
+    for (let i = 0; i < NP; i++) {
+      const p = ap[i]; const u = p.s * b; sampleLUT(p.lut, u, tmp).add(p.j); pa.setXYZ(i, tmp.x, tmp.y, tmp.z);
+      al.setX(i, smooth(0.02, 0.14, b) * 0.85); co.setXYZ(i, cc.r, cc.g, cc.b);
+    }
+    pa.needsUpdate = true; al.needsUpdate = true; co.needsUpdate = true;
+  };
+  for (const m of [airMat, ringMat, brMat]) { m.transparent = true; m.userData.glass = 0.55; }
+  S.layer = { label: 'Pleura glass', on: true, set(on) { for (const m of lungMats) { m.opacity = on ? 0.4 : 1; m.depthWrite = !on; m.needsUpdate = true; } for (const m of [airMat, ringMat, brMat]) { m.opacity = on ? m.userData.glass : 1; m.depthWrite = !on; m.needsUpdate = true; } air.material.uniforms.uOpacity.value = on ? 1 : 0; } };
+  S.pick = pick;
+  const vol = (f) => 2400 + 500 * breath(f);
+  S.signal = (f) => vol(f); S.sigRange = [2330, 2980]; S.traceWin = 12;
+  S.traceValue = (f) => `${Math.round(vol(f))} mL`;
+  S.traits = [
+    { icon: 'pulse', k: 'Breathing rate', v: () => '15 / min' },
+    { icon: 'drop', k: 'Tidal volume', v: () => '500 mL' },
+    { icon: 'gauge', k: 'Diaphragm travel', v: (f) => `${(1.5 * breath(f)).toFixed(1)} cm`, live: true },
+    { icon: 'clock', k: 'Phase', v: (f) => S.phaseAt(f).name, live: true },
+  ];
+  S.phases = [{ name: 'Inspiration', a: 0, b: 0.4 }, { name: 'Pause', short: 'Hold', a: 0.4, b: 0.45 }, { name: 'Expiration', a: 0.45, b: 0.9 }, { name: 'Rest', short: 'Rest', a: 0.9, b: 1 }];
+  S.cycle = { len: 4, unit: 's', dp: 1 }; S.timeScale = 'Real time';
+  S.scale = { per: 8, unit: 'cm', cands: [2, 5, 10] };
+  S.cam = { pos: V(0.5, 0.7, 9.8), target: V(0, 0.15, 0) };
+  S.meta = {
+    id: 'LS-033', eyebrow: 'Respiratory · Specimen LS-033', name: 'Human Lungs', latin: 'Pulmones', tags: ['Branching airway', 'Gas exchange', 'Negative pressure'],
+    desc: 'The diaphragm contracts and drops, the chest widens, and air is drawn down a tree of airways that splits more than twenty times. Oxygen crosses into the blood at roughly 480 million alveoli, and carbon dioxide leaves on the same breath out.',
+    where: 'Thoracic cavity, on either side of the heart, resting on the diaphragm. The right lung has three lobes and the left has two.',
+    trace: 'Spirometry · lung volume', caption: 'Fifteen breaths a minute, none of them requested.', layerLabel: 'Pleura glass',
+  };
+  S.parts = [
+    { key: 'trachea', name: 'Trachea', color: '#f3e6d6', desc: 'The windpipe, held open by C-shaped rings of cartilage so it never collapses when pressure drops.', anchor: [root, V(0.2, 2.1, 0)] },
+    { key: 'bronchi', name: 'Bronchial tree', color: '#ead2c6', desc: 'Airways that fork again and again, from 2 main bronchi down to tens of thousands of terminal bronchioles.', anchor: [tree, V(0.45, -0.55, 0.08)] },
+    { key: 'alveoli', name: 'Alveoli', color: '#f4a8b5', desc: 'Tiny air sacs wrapped in capillaries. Their walls are thinner than a micron, so oxygen and carbon dioxide diffuse across in under a second.', anchor: [tree, leaves[3].end] },
+    { key: 'rlung', name: 'Right lung', color: '#e8949d', desc: 'Larger of the two, with three lobes. Its short, wide main bronchus is why inhaled objects usually end up on this side.', anchor: [lungR, V(0.55, 0.15, 0.85)] },
+    { key: 'llung', name: 'Left lung', color: '#e18a96', desc: 'Two lobes and a cardiac notch, a hollow on its inner front edge that makes room for the heart.', anchor: [lungL, V(-0.6, 0.1, 0.82)] },
+    { key: 'diaphragm', name: 'Diaphragm', color: '#b5525a', desc: 'The main breathing muscle. When it contracts it flattens and drops about 1.5 cm at rest, lowering pressure in the chest so air flows in.', anchor: [dia, V(0, 2.0, 0)] },
+  ];
+  return S;
+}
+
+/* ================= specimen: early embryo ================= */
+function buildEmbryo() {
+  const S = { id: 'embryo', period: 10 };
+  const root = new THREE.Group(); S.root = root; const spin = new THREE.Group(); root.add(spin);
+  const pick = []; const R = rng(41);
+  const zonaMat = tissue('#cfe0ee', { transparent: true, opacity: 0.1, depthWrite: false, roughness: 0.15, clearcoat: 1, side: THREE.DoubleSide });
+  const zona = new THREE.Group(); root.add(zona);
+  const z1 = new THREE.Mesh(organicSphere(1.78, 96, 72, { amp: 0.012, freq: 3, seed: 1 }), zonaMat); z1.userData.part = 'zona'; zona.add(z1); pick.push(z1);
+  const z2 = new THREE.Mesh(new THREE.SphereGeometry(1.64, 96, 72), tissue('#e4eef6', { transparent: true, opacity: 0.05, depthWrite: false, side: THREE.BackSide })); zona.add(z2);
+  const polMat = tissue('#e9cdbf');
+  const pol = [[0.35, 1.42, 0.45, 0.17], [0.62, 1.3, 0.3, 0.13]].map(([x, y, z, r]) => { const m = new THREE.Mesh(organicSphere(r, 32, 24, { amp: 0.05 }), polMat); m.position.set(x, y, z); m.userData.part = 'polar'; root.add(m); pick.push(m); return m; });
+
+  /* lineage: each division halves volume (radius × 0.794) without growth */
+  const rL = (L) => 1.12 * Math.pow(0.7937, L);
+  const axes = [V(1, 0, 0), V(0, 1, 0.15).normalize(), V(0.1, 0, 1).normalize(), V(0.7, 0.2, 0.7).normalize(), V(0.2, 1, -0.3).normalize()];
+  const P = [[V(0, 0, 0)]];
+  for (let L = 0; L < 5; L++) {
+    const next = []; const d = rL(L + 1) * 0.8;
+    for (const p of P[L]) for (const s of [-1, 1]) { const c = p.clone().addScaledVector(axes[L], s * d); const lim = 1.52 - rL(L + 1); if (c.length() > lim) c.setLength(lim); next.push(c); }
+    if (L + 1 === 4) next.forEach((c) => c.setLength(0.98)); /* morula: compact ball */
+    if (L + 1 === 5) next.forEach((c) => c.setLength(Math.max(0.9, c.length())));
+    P.push(next);
+  }
+  /* blastocyst targets: 7 inner-cell-mass cells at one pole, 25 trophoblast cells on the shell */
+  const fib = (n, i) => { const y = 1 - (i + 0.5) / n * 2, r = Math.sqrt(1 - y * y), th = i * 2.39996; return V(Math.cos(th) * r, y, Math.sin(th) * r); };
+  const order = P[5].map((p, i) => i).sort((a, b) => P[5][b].y - P[5][a].y);
+  const icmSet = new Set(order.slice(0, 7));
+  const T = new Array(32); const trophN = []; const used = new Set();
+  order.slice(0, 7).forEach((i, k) => { T[i] = V(0, 0.78, 0).add(fib(7, k).multiplyScalar(0.33)); });
+  const shell = []; for (let k = 0; k < 25; k++) shell.push(fib(25, k).multiplyScalar(1.3));
+  order.slice(7).forEach((i) => { let best = -1, bd = 1e9; shell.forEach((p, k) => { if (used.has(k)) return; const d = p.distanceTo(P[5][i].clone().setLength(1.3)); if (d < bd) { bd = d; best = k; } }); used.add(best); T[i] = shell[best]; trophN[i] = shell[best].clone().normalize(); });
+
+  const cellGeo = organicSphere(1, 48, 36, { amp: 0.035, freq: 2.2, seed: 4 });
+  const nucGeo = new THREE.SphereGeometry(0.3, 20, 14); const nucMat = tissue('#7f4b8d', { roughness: 0.35 });
+  const cBase = new THREE.Color('#f1c6b8'), cIcm = new THREE.Color('#d9839c'), cTro = new THREE.Color('#efb3a8');
+  const cells = []; const sp = [];
+  for (let i = 0; i < 32; i++) {
+    const mat = tissue('#f1c6b8', { transparent: true, opacity: 0.8, roughness: 0.38, clearcoat: 0.8 });
+    const m = new THREE.Mesh(cellGeo, mat); m.userData.part = 'blastomere'; spin.add(m); pick.push(m);
+    const n = new THREE.Mesh(nucGeo, nucMat); m.add(n);
+    cells.push({ m, mat, n, ph: R() * TAU });
+    const g = glow('#ffcf6b', 0.35); spin.add(g); sp.push(g);
+  }
+  const cavMat = tissue('#9fd8ff', { transparent: true, opacity: 0, depthWrite: false, roughness: 0.1, clearcoat: 1 });
+  const cav = new THREE.Mesh(new THREE.SphereGeometry(1, 48, 36), cavMat); cav.position.set(0, -0.25, 0); cav.userData.part = 'cavity'; spin.add(cav); pick.push(cav);
+  const NF = 420; const fluid = makePoints(NF, { size: 0.035, color: '#bdeaff', alpha: 0.7 }); spin.add(fluid);
+  const fl = []; for (let i = 0; i < NF; i++) { const d = V(R() - 0.5, R() - 0.5, R() - 0.5); fl.push({ d: d.normalize(), r: Math.cbrt(R()), ph: R() * TAU, w: 0.2 + R() * 0.5 }); }
+
+  const W = [[0.12, 0.18], [0.27, 0.33], [0.42, 0.48], [0.57, 0.63], [0.7, 0.76]];
+  const stage = (f) => { let L = 0; for (let w = 0; w < W.length; w++) { if (f >= W[w][1]) L = w + 1; else if (f >= W[w][0]) return { L: w, k: (f - W[w][0]) / (W[w][1] - W[w][0]) }; } return { L, k: -1 }; };
+  const count = (f) => { const s = stage(f); return s.k >= 0 ? (2 ** s.L) * (s.k > 0.5 ? 2 : 1) : 2 ** s.L; };
+  const dayK = [[0, 0], [0.15, 1.2], [0.3, 2], [0.45, 2.8], [0.6, 3.5], [0.78, 4.3], [1, 5.5]];
+  const day = (f) => { for (let i = 1; i < dayK.length; i++) if (f <= dayK[i][0]) return lerp(dayK[i - 1][1], dayK[i][1], (f - dayK[i - 1][0]) / (dayK[i][0] - dayK[i - 1][0])); return 5.5; };
+  const up = V(0, 1, 0), tmp = new THREE.Vector3(), qq = new THREE.Quaternion();
+  S.update = (t, f) => {
+    spin.rotation.y = t * 0.06;
+    const { L, k } = stage(f); const cav01 = smooth(0.78, 0.92, f); const compact = smooth(0.48, 0.56, f) * (1 - smooth(0.57, 0.6, f));
+    for (let i = 0; i < 32; i++) {
+      const c = cells[i]; let vis, pos, r, dividing = false, e = 0;
+      if (k >= 0) { const sh = 5 - L - 1; vis = (i % (1 << sh)) === 0; const ch = i >> sh; e = smooth(0.15, 0.85, k); pos = P[L][ch >> 1].clone().lerp(P[L + 1][ch], e); r = lerp(rL(L), rL(L + 1), e); dividing = true; }
+      else { const sh = 5 - L; vis = (i % (1 << sh)) === 0; pos = P[L][i >> sh].clone(); r = rL(L); }
+      c.m.visible = vis; sp[i].material.opacity = 0;
+      if (!vis) continue;
+      c.m.quaternion.identity(); let sx = r, sy = r, sz = r;
+      if (L === 3 && k < 0) { pos.multiplyScalar(1 - 0.12 * compact); sx = sy = sz = r * (1 + 0.1 * compact); }
+      if (L === 5) {
+        pos.lerp(T[i], cav01);
+        if (icmSet.has(i)) { c.mat.color.copy(cBase).lerp(cIcm, cav01); c.m.userData.part = cav01 > 0.3 ? 'icm' : 'blastomere'; }
+        else { c.mat.color.copy(cBase).lerp(cTro, cav01); qq.setFromUnitVectors(up, trophN[i]); c.m.quaternion.slerp(qq, cav01); sx = sz = r * lerp(1, 1.55, cav01); sy = r * lerp(1, 0.5, cav01); c.m.userData.part = cav01 > 0.3 ? 'troph' : 'blastomere'; }
+      } else { c.mat.color.copy(cBase); c.m.userData.part = 'blastomere'; }
+      pos.x += 0.015 * Math.sin(t * 1.3 + c.ph); pos.y += 0.015 * Math.sin(t * 1.1 + c.ph * 2); pos.z += 0.015 * Math.cos(t * 1.2 + c.ph);
+      c.m.position.copy(pos); c.m.scale.set(sx, sy, sz);
+      c.n.visible = !(dividing && k > 0.15 && k < 0.75);
+      if (dividing) { sp[i].position.copy(pos); sp[i].material.opacity = Math.sin(Math.PI * clamp((k - 0.1) / 0.7, 0, 1)); sp[i].scale.setScalar(0.25 + r * 0.4); }
+    }
+    cav.visible = cav01 > 0.02; cav.scale.setScalar(Math.max(0.001, 1.02 * cav01)); cavMat.opacity = 0.22 * cav01;
+    const fp = fluid.geometry.attributes.position, fa = fluid.geometry.attributes.aAlpha;
+    for (let i = 0; i < NF; i++) { const p = fl[i]; const a = t * p.w + p.ph; tmp.copy(p.d).applyAxisAngle(up, a).multiplyScalar(p.r * 0.95 * cav01).add(cav.position); fp.setXYZ(i, tmp.x, tmp.y, tmp.z); fa.setX(i, 0.7 * cav01); }
+    fp.needsUpdate = true; fa.needsUpdate = true;
+  };
+  S.layer = { label: 'Zona', on: true, set(on) { zona.visible = on; } };
+  S.pick = pick;
+  S.signal = (f) => count(f); S.sigRange = [0, 35]; S.traceWin = 10;
+  S.traceValue = (f) => `${count(f)} cell${count(f) > 1 ? 's' : ''}`;
+  S.timeLabel = (f) => `Day ${day(f).toFixed(1)} / Day 5.5`;
+  S.traits = [
+    { icon: 'ruler', k: 'Diameter', v: () => '≈ 0.1–0.2 mm' },
+    { icon: 'layers', k: 'Cell count', v: (f) => `${count(f)}`, live: true },
+    { icon: 'clock', k: 'Since fertilisation', v: (f) => `Day ${day(f).toFixed(1)}`, live: true },
+    { icon: 'pulse', k: 'Phase', v: (f) => S.phaseAt(f).name, live: true },
+  ];
+  S.phases = [{ name: 'Zygote', a: 0, b: 0.15 }, { name: '2-cell', a: 0.15, b: 0.3 }, { name: '4-cell', a: 0.3, b: 0.45 }, { name: '8-cell', a: 0.45, b: 0.6 }, { name: 'Morula', a: 0.6, b: 0.78 }, { name: 'Blastocyst', a: 0.78, b: 1 }];
+  S.cycle = { len: 5.5, unit: 'days', dp: 1 }; S.timeScale = 'Sped up ≈ 47,000×';
+  S.scale = { per: 40, unit: 'µm', cands: [10, 20, 50, 100] };
+  S.cam = { pos: V(0.6, 1.2, 8.4), target: V(0, 0, 0) };
+  S.meta = {
+    id: 'LS-041', eyebrow: 'Embryology · Specimen LS-041', name: 'Early Embryo', latin: 'Embryo humanum, dies 0–5', tags: ['Cleavage', 'Totipotent', 'Pre-implantation'],
+    desc: 'The first five days after fertilisation. The zygote divides again and again without growing, so every new cell is half the volume of its parent. The cells pack tight into a morula, then pump in fluid to form a hollow blastocyst whose inner cell mass will become the body.',
+    where: 'Drifting down the fallopian tube toward the uterus, still inside its protective zona pellucida. It hatches and implants around day 6 to 7.',
+    trace: 'Cell count', caption: 'One cell, dividing into a plan.', layerLabel: 'Zona',
+  };
+  S.parts = [
+    { key: 'blastomere', name: 'Blastomeres', color: '#f1c6b8', desc: 'The cells made by cleavage. Up to the 8-cell stage each one can still form a whole organism.', anchor: [cells[0].m, V(0, 1, 0)] },
+    { key: 'zona', name: 'Zona pellucida', color: '#cfe0ee', desc: 'A glycoprotein shell that blocks extra sperm and keeps the dividing cells together until the blastocyst hatches out.', anchor: [root, V(1.25, 1.25, 0.2)] },
+    { key: 'polar', name: 'Polar bodies', color: '#e9cdbf', desc: 'Tiny cells left over from the egg’s two meiotic divisions. They carry spare chromosomes and play no further part.', anchor: [pol[0], V(0, 0, 0)] },
+    { key: 'icm', name: 'Inner cell mass', color: '#d9839c', desc: 'A small cluster at one pole of the blastocyst. These pluripotent cells will form the embryo itself.', anchor: [cells[order[0]].m, V(0, 0, 0)] },
+    { key: 'troph', name: 'Trophoblast', color: '#efb3a8', desc: 'The flattened outer layer of the blastocyst. It will invade the uterine wall and build the placenta.', anchor: [cells[order[20]].m, V(0, 0, 0)] },
+    { key: 'cavity', name: 'Blastocoel', color: '#9fd8ff', desc: 'A fluid-filled cavity that forms as trophoblast cells pump sodium inward and water follows.', anchor: [cav, V(0, -0.4, 0.3)] },
+  ];
+  return S;
+}
+
 /* ================= scene ================= */
 const canvas = $('#gl'), viewport = $('#viewport');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
@@ -885,7 +1118,7 @@ scene.add(new THREE.HemisphereLight('#d9dcff', '#2a1830', 0.35));
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true; controls.dampingFactor = 0.08; controls.enablePan = false; controls.minDistance = 3.5; controls.maxDistance = 16; controls.autoRotateSpeed = 0.7;
 
-const specimens = [buildHeart(), buildCell(), buildNeuron()];
+const specimens = [buildHeart(), buildLungs(), buildCell(), buildNeuron(), buildEmbryo()];
 for (const s of specimens) {
   scene.add(s.root); s.root.visible = false;
   s.phaseAt = (f) => s.phases.find((p) => f >= p.a && f < p.b) || s.phases[s.phases.length - 1];
@@ -923,7 +1156,8 @@ function thumbs() {
   for (const s of specimens) {
     specimens.forEach((o) => (o.root.visible = o === s));
     camera.position.copy(s.cam.pos).sub(s.cam.target).multiplyScalar(s.id === 'neuron' ? 0.78 : 0.82).add(s.cam.target); camera.lookAt(s.cam.target);
-    s.update(s.period * 0.3, 0.3, { camera, target: s.cam.target });
+    const tf = s.id === 'embryo' ? 0.66 : s.id === 'lungs' ? 0.42 : 0.3;
+    s.update(s.period * tf, tf, { camera, target: s.cam.target });
     renderer.render(scene, camera); out[s.id] = canvas.toDataURL('image/png');
   }
   size(); return out;
@@ -944,8 +1178,8 @@ const NAV = [
   { k: 'Circulatory', n: '14 specimens', icon: ICONS.drop, spec: 'heart' },
   { k: 'Cellular', n: '22 specimens', icon: '<circle cx="8" cy="8" r="6"/><circle cx="7" cy="7.5" r="2"/><circle cx="11" cy="10" r=".8"/>', spec: 'cell' },
   { k: 'Nervous', n: '18 specimens', icon: '<circle cx="4" cy="8" r="2"/><path d="M6 8h8M11 8l2.5-2.5M11 8l2.5 2.5M2.5 6.5 1 5M2.5 9.5 1 11"/>', spec: 'neuron' },
-  { k: 'Respiratory', n: '9 specimens', icon: '<path d="M8 1.5V8M8 8c-1 0-1.5 1-3 1.5S1.5 13 2.5 14s3-.5 3.5-2M8 8c1 0 1.5 1 3 1.5s3.5 3.5 2.5 4.5-3-.5-3.5-2"/>', soon: true },
-  { k: 'Embryology', n: '7 specimens', icon: '<path d="M8 13.5A5.5 5.5 0 1 1 13.5 8c0 2-1.5 3.5-3.5 3.5S7 10 7 8.5 8 6 9.5 6.5"/>', soon: true },
+  { k: 'Respiratory', n: '9 specimens', icon: '<path d="M8 1.5V8M8 8c-1 0-1.5 1-3 1.5S1.5 13 2.5 14s3-.5 3.5-2M8 8c1 0 1.5 1 3 1.5s3.5 3.5 2.5 4.5-3-.5-3.5-2"/>', spec: 'lungs' },
+  { k: 'Embryology', n: '7 specimens', icon: '<path d="M8 13.5A5.5 5.5 0 1 1 13.5 8c0 2-1.5 3.5-3.5 3.5S7 10 7 8.5 8 6 9.5 6.5"/>', spec: 'embryo' },
 ];
 function buildNav() {
   $('#nav').innerHTML = NAV.map((n, i) => `<li><button data-i="${i}" ${n.soon ? 'aria-disabled="true"' : ''} ${n.cur ? 'aria-current="true"' : ''}>
@@ -1161,7 +1395,7 @@ function frame(now) {
     uiT = now;
     const ph = s.phaseAt(f);
     $('#tlPhase').textContent = ph.name;
-    $('#tlTime').textContent = `${(f * s.cycle.len).toFixed(s.cycle.dp)} ${s.cycle.unit} / ${s.cycle.len} ${s.cycle.unit}`;
+    $('#tlTime').textContent = s.timeLabel ? s.timeLabel(f) : `${(f * s.cycle.len).toFixed(s.cycle.dp)} ${s.cycle.unit} / ${s.cycle.len} ${s.cycle.unit}`;
     tl.setAttribute('aria-valuenow', Math.round(f * 100)); tl.setAttribute('aria-valuetext', `${ph.name}, ${Math.round(f * 100)} percent through the cycle`);
     [...$('#tlSegs').children].forEach((el, i) => el.classList.toggle('on', s.phases[i] === ph));
     s.traits.forEach((t, i) => { const v = t.v(f, st.t); if (traitEls[i] && traitEls[i].textContent !== v) traitEls[i].textContent = v; });
